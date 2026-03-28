@@ -1,12 +1,14 @@
 import { round, score } from './score.js';
 
 /**
- * Path to directory containing `_list.json` and all levels
+ * Path to directory containing `list.json` and all levels
+ * Removed the leading slash to fix GitHub Pages 404
  */
-const dir = '/data';
+const dir = 'data';
 
 export async function fetchList() {
-    const listResult = await fetch(`${dir}/_list.json`);
+    // Changed _list.json to list.json to match your file name
+    const listResult = await fetch(`${dir}/list.json`);
     try {
         const list = await listResult.json();
         return await Promise.all(
@@ -38,7 +40,8 @@ export async function fetchList() {
 
 export async function fetchEditors() {
     try {
-        const editorsResults = await fetch(`${dir}/_editors.json`);
+        // Changed _editors.json to editors.json
+        const editorsResults = await fetch(`${dir}/editors.json`);
         const editors = await editorsResults.json();
         return editors;
     } catch {
@@ -120,5 +123,6 @@ export async function fetchLeaderboard() {
     });
 
     // Sort by total score
-    return [res.sort((a, b) => b.total - a.total), errs];
+    return [res.sort((a, b) => b.total - a.total), errs.sort()];
 }
+
